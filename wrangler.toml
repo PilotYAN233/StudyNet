@@ -1,0 +1,9 @@
+name = "studynet"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "."
+
+# Optional: allow additional OpenAI-compatible endpoints through the
+# same-origin relay. The client uses direct requests for custom providers
+# unless the route is explicitly set to "proxy" in Settings.
+# [vars]
+# AI_ALLOWED_HOSTS = "api.moonshot.cn,api.siliconflow.cn"

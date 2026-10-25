@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <title>当前离线 · StudyNet 学习舱</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <style>
+    body { display: grid; place-items: center; min-height: 100dvh; padding: 24px; }
+    .offline { width: min(520px, 100%); padding: 38px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; box-shadow: var(--shadow-md); }
+    .offline .brand { justify-content: center; margin-bottom: 28px; }
+    .offline__art { display: grid; place-items: center; width: 66px; height: 66px; margin: 0 auto 18px; border-radius: 20px; background: var(--coral-soft); color: var(--coral); }
+    .offline h1 { font-size: 25px; }
+    .offline p { margin: 8px auto 24px; max-width: 350px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+  </style>
+</head>
+<body>
+  <main class="offline">
+    <a class="brand" href="index.html"><span class="brand__mark">✦</span><span class="brand__text"><strong>StudyNet</strong><small>学习舱</small></span></a>
+    <div class="offline__art">⌁</div>
+    <h1>现在没有网络</h1>
+    <p>已经打开过的页面和本机数据仍然可以用。AI 答疑需要联网，等网络恢复后再试。计划、错题本和专注计时不受影响。</p>
+    <a class="btn btn--primary" href="index.html">回到学习首页</a>
+  </main>
+</body>
+</html>

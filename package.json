@@ -1,0 +1,18 @@
+{
+  "name": "studynet-learning-cabin",
+  "version": "1.0.1",
+  "private": true,
+  "description": "StudyNet 学习舱 — a local-first AI study workspace for junior high students.",
+  "scripts": {
+    "dev": "python -m http.server 8788",
+    "serve": "python -m http.server 8788",
+    "deploy": "npx wrangler pages deploy . --project-name studynet"
+  },
+  "keywords": [
+    "education",
+    "study",
+    "cloudflare-pages",
+    "ai"
+  ],
+  "license": "MIT"
+}

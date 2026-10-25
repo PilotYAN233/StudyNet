@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <title>每日计划 · StudyNet 学习舱</title>
+  <meta name="description" content="让 AI 帮你安排可执行的每日学习计划，用时间轴、优先级和完成进度保持节奏。">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body data-page="plan">
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="侧边导航"></aside>
+    <div class="app-main">
+      <header id="topbar" class="topbar"></header>
+      <main class="page-content" id="main">
+        <section class="page-head">
+          <div class="page-head__main">
+            <p class="page-eyebrow"><i></i>DAILY RHYTHM</p>
+            <h1>每日计划</h1>
+            <p class="page-head__sub">任务不是越多越好。排出真正做得完的顺序，给今天一个清晰的落点。</p>
+          </div>
+          <div class="page-head__actions">
+            <button type="button" class="btn btn--ghost" id="plan-add-btn">
+              <span data-icon="plus"></span><span class="btn__optional-text">手动添加</span>
+            </button>
+            <button type="button" class="btn btn--primary" id="plan-ai-btn">
+              <span data-icon="sparkles"></span><span>AI 排计划</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="week-strip" id="week-strip" aria-label="选择日期"></section>
+
+        <div class="plan-layout">
+          <section class="card plan-main" aria-labelledby="plan-date">
+            <header class="card__head">
+              <div class="plan-date-title">
+                <h2 id="plan-date">今日计划</h2>
+                <span class="chip" id="plan-date-chip">今天</span>
+              </div>
+              <div class="plan-date-actions">
+                <button type="button" class="icon-btn" id="plan-today" title="回到今天" aria-label="回到今天">
+                  <span data-icon="target" data-icon-size="16"></span>
+                </button>
+                <button type="button" class="icon-btn" id="plan-prev" title="前一天" aria-label="前一天">
+                  <span data-icon="chevron-left" data-icon-size="16"></span>
+                </button>
+                <button type="button" class="icon-btn" id="plan-next" title="后一天" aria-label="后一天">
+                  <span data-icon="chevron-right" data-icon-size="16"></span>
+                </button>
+              </div>
+            </header>
+            <div class="plan-task-list" id="plan-task-list"></div>
+            <footer class="plan-main__foot">
+              <p id="plan-foot-note">把最难的事放在精力最好的一段时间。</p>
+              <div class="plan-main__foot-actions">
+                <button type="button" class="btn btn--ghost btn--sm" id="plan-move-unfinished">顺延未完成</button>
+                <button type="button" class="btn btn--ghost btn--sm" id="plan-clear-done">清空已完成</button>
+              </div>
+            </footer>
+          </section>
+
+          <aside class="plan-side">
+            <section class="card plan-goal" aria-labelledby="plan-goal-title">
+              <div class="plan-goal__head">
+                <h3 id="plan-goal-title">完成进度</h3>
+                <span class="chip" id="plan-status-chip">待开始</span>
+              </div>
+              <div class="plan-goal__ring" id="plan-ring"></div>
+              <div class="plan-goal__stats">
+                <div class="plan-goal__stat"><span>计划任务</span><strong id="plan-stat-tasks">0 项</strong></div>
+                <div class="plan-goal__stat"><span>预计用时</span><strong id="plan-stat-minutes">0 分钟</strong></div>
+                <div class="plan-goal__stat"><span>已完成</span><strong id="plan-stat-done">0 项</strong></div>
+                <div class="plan-goal__stat"><span>专注时长</span><strong id="plan-stat-focus">0 分钟</strong></div>
+              </div>
+            </section>
+
+            <section class="card subject-dist" aria-labelledby="subject-dist-title">
+              <h3 id="subject-dist-title">学科分布</h3>
+              <div class="subject-dist__list" id="subject-dist-list"></div>
+            </section>
+
+            <section class="card plan-tip">
+              <div class="plan-tip__head"><span data-icon="lightbulb" data-icon-size="14"></span>今日节奏提示</div>
+              <p id="plan-tip-text">先完成最重要的一件事，再开始下一件。</p>
+            </section>
+          </aside>
+        </div>
+
+        <footer class="site-footer">
+          <span>StudyNet 学习舱 · 计划要能完成，才算计划</span>
+          <span><span data-icon="lock" data-icon-size="12"></span> 数据只保存在本机</span>
+        </footer>
+      </main>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="底部导航"></nav>
+  </div>
+
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+  <div id="onboarding-root"></div>
+
+  <script src="assets/vendor/katex/katex.min.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/shell.js"></script>
+  <script src="assets/js/plan.js"></script>
+</body>
+</html>

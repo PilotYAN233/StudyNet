@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <title>StudyNet 学习舱 · 初中 AI 学习工作台</title>
+  <meta name="description" content="为初中生设计的 AI 学习工作台：AI 答疑、智能错题归纳、每日计划和专注时钟，把每天的进步变成看得见的节奏。">
+  <meta property="og:title" content="StudyNet 学习舱 · 初中 AI 学习工作台">
+  <meta property="og:description" content="AI 答疑、智能错题本、每日计划与专注时钟，一个属于初中生的学习驾驶舱。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og-cover.png">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body data-page="dashboard">
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="侧边导航"></aside>
+    <div class="app-main">
+      <header id="topbar" class="topbar"></header>
+      <main class="page-content" id="main">
+        <section class="page-head">
+          <div class="page-head__main">
+            <p class="page-eyebrow"><i></i><span id="home-date">今日学习</span></p>
+            <h1><span id="home-greeting">晚上好</span>，<span id="home-name">同学</span><em>。</em></h1>
+            <p class="page-head__sub" id="home-sub">今天也按自己的节奏，往前一点点。</p>
+          </div>
+          <div class="page-head__actions">
+            <button type="button" class="btn btn--ghost" data-quick-task>
+              <span data-icon="plus"></span><span class="btn__optional-text">添加任务</span>
+            </button>
+            <a class="btn btn--primary" href="chat.html">
+              <span data-icon="sparkles"></span><span>问 AI</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="stats-strip" id="stats-strip" aria-label="今日学习数据"></section>
+
+        <div class="dashboard-grid">
+          <section class="card today-card span-7" aria-labelledby="today-title">
+            <header class="card__head">
+              <div>
+                <div class="card-title-group">
+                  <span class="card-title-icon" data-icon="calendar"></span>
+                  <div>
+                    <h2 class="card__title" id="today-title">今日计划</h2>
+                    <p class="card__sub" id="today-sub">把注意力放在下一件小事上</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row gap-10">
+                <span class="today-progress__label" id="today-progress-label">0 / 0</span>
+                <a class="link-arrow" href="plan.html">全部计划 <span data-icon="arrow-right"></span></a>
+              </div>
+            </header>
+            <div class="today-progress">
+              <div class="today-progress__track"><span id="today-progress-bar" style="width:0%"></span></div>
+              <span class="today-progress__label" id="today-progress-percent">0%</span>
+            </div>
+            <div class="today-list" id="dashboard-tasks"></div>
+            <button type="button" class="today-add" data-quick-task>
+              <span data-icon="plus" style="width:14px;height:14px"></span>
+              <span>添加一个今天的小目标</span>
+              <kbd>T</kbd>
+            </button>
+          </section>
+
+          <section class="focus-card span-5" aria-labelledby="focus-title">
+            <div class="focus-card__head">
+              <div class="focus-card__title" id="focus-title">
+                <span data-icon="timer"></span> 专注时钟
+              </div>
+              <span class="focus-card__status" id="focus-status"><i></i>准备开始</span>
+            </div>
+            <div class="focus-dial-wrap">
+              <div class="focus-dial" id="focus-dial" style="--progress:0">
+                <div class="focus-dial__inner">
+                  <span class="focus-dial__time" id="focus-time">25:00</span>
+                  <span class="focus-dial__label" id="focus-subject">今天的第一段专注</span>
+                </div>
+              </div>
+            </div>
+            <div class="focus-card__actions">
+              <a class="btn btn--lime" href="focus.html?start=25" id="focus-start">
+                <span data-icon="play"></span>开始 25 分钟
+              </a>
+              <a class="btn btn--ghost" href="focus.html" style="color:#c7d1df;border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.04)">专注空间</a>
+            </div>
+            <div class="focus-card__foot">
+              <span>今日已专注 <strong id="focus-today">0 分钟</strong></span>
+              <i class="dot"></i>
+              <span>目标 <strong id="focus-goal">90 分钟</strong></span>
+            </div>
+          </section>
+
+          <section class="card mistake-preview span-5" aria-labelledby="mistake-title">
+            <header class="card__head">
+              <div class="card-title-group">
+                <span class="card-title-icon card-title-icon--coral" data-icon="notebook"></span>
+                <div>
+                  <h2 class="card__title" id="mistake-title">错题复习</h2>
+                  <p class="card__sub">把错过的题，变成会做的题</p>
+                </div>
+              </div>
+              <span class="mistake-preview__count" id="mistake-due-count"><span data-icon="clock"></span>今日待复习</span>
+            </header>
+            <div class="mistake-preview__list" id="mistake-preview-list"></div>
+            <footer class="card__footer">
+              <span class="small muted">按遗忘曲线安排复习</span>
+              <a class="link-arrow" href="mistakes.html?review=due" id="mistake-review-link">去复习 <span data-icon="arrow-right"></span></a>
+            </footer>
+          </section>
+
+          <section class="card week-card span-7" aria-labelledby="week-title">
+            <header class="card__head">
+              <div class="card-title-group">
+                <span class="card-title-icon card-title-icon--mint" data-icon="chart"></span>
+                <div>
+                  <h2 class="card__title" id="week-title">学习节奏</h2>
+                  <p class="card__sub">近 7 天专注时长 · 分钟</p>
+                </div>
+              </div>
+              <div class="week-card__head-actions">
+                <div class="week-total"><strong id="week-total">0</strong><span>本周分钟</span></div>
+              </div>
+            </header>
+            <div class="weekly-chart-wrap" id="week-chart"></div>
+            <footer class="week-card__foot">
+              <span class="week-foot-item"><i></i><strong id="week-days">0</strong> 天有专注</span>
+              <span class="week-foot-item"><i style="background:var(--coral)"></i><strong id="week-tasks">0</strong> 项任务完成</span>
+              <a class="link-arrow" href="plan.html">看计划 <span data-icon="arrow-right"></span></a>
+            </footer>
+          </section>
+
+          <section class="insight-card span-12" id="insight-card">
+            <div class="insight-orb"><span data-icon="sparkles"></span></div>
+            <div class="insight-card__body">
+              <div class="insight-card__eyebrow"><span data-icon="zap"></span>AI 学习调度</div>
+              <h3 id="insight-title">今天，先把哪一件事做好？</h3>
+              <p class="insight-card__text" id="insight-text">正在读取今天的学习节奏...</p>
+              <div class="insight-result" id="insight-result"></div>
+            </div>
+            <div class="insight-card__actions">
+              <button type="button" class="btn btn--dark" id="insight-generate">
+                <span data-icon="wand"></span>生成今日简报
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <footer class="site-footer">
+          <span>StudyNet 学习舱 · 把努力变得可见</span>
+          <span><span data-icon="lock"></span> 数据只保存在本机</span>
+        </footer>
+      </main>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="底部导航"></nav>
+  </div>
+
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+  <div id="onboarding-root"></div>
+
+  <script src="assets/vendor/katex/katex.min.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/shell.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

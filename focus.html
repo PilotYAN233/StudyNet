@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1421">
+  <title>专注空间 · StudyNet 学习舱</title>
+  <meta name="description" content="用 25 分钟专注时钟进入深度学习状态，记录每一次专注，形成自己的学习节奏。">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body data-page="focus">
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="侧边导航"></aside>
+    <div class="app-main">
+      <header id="topbar" class="topbar"></header>
+      <main class="page-content" id="main">
+        <section class="page-head focus-page-head">
+          <div class="page-head__main">
+            <p class="page-eyebrow"><i></i>DEEP WORK</p>
+            <h1>专注空间</h1>
+            <p class="page-head__sub">一次只做一件事。把手机放到看不见的地方，让这段时间只属于你。</p>
+          </div>
+          <div class="page-head__actions">
+            <a class="btn btn--ghost" href="plan.html"><span data-icon="calendar"></span><span>查看今日计划</span></a>
+          </div>
+        </section>
+
+        <div class="focus-page-grid">
+          <section class="focus-stage" aria-labelledby="focus-clock-label">
+            <div class="focus-stage__top">
+              <span class="focus-stage__eyebrow"><i></i>DEEP FOCUS · 沉浸模式</span>
+              <button type="button" class="zen-btn" id="zen-btn">
+                <span data-icon="maximize" data-icon-size="13"></span>全屏专注
+              </button>
+            </div>
+            <div class="focus-clock">
+              <p class="focus-clock__sub" id="focus-round">今天第 1 轮 · <strong>先开始，再谈状态</strong></p>
+              <div class="focus-ring-wrap">
+                <svg viewBox="0 0 400 400" aria-hidden="true">
+                  <circle class="focus-ring__track" cx="200" cy="200" r="178" stroke-width="7"></circle>
+                  <circle class="focus-ring__progress" id="focus-ring-progress" cx="200" cy="200" r="178" stroke-width="7" stroke-dasharray="1118.4" stroke-dashoffset="0"></circle>
+                </svg>
+                <div class="focus-ring__inner">
+                  <span class="focus-time" id="focus-clock-label">25:00</span>
+                  <span class="focus-state" id="focus-state"><i></i>准备开始</span>
+                </div>
+              </div>
+            </div>
+            <div class="focus-subject" id="focus-subjects" aria-label="选择专注学科"></div>
+            <div class="focus-controls">
+              <button type="button" class="focus-control" id="focus-toggle">
+                <span data-icon="play" data-icon-size="17"></span><span>开始专注</span>
+              </button>
+              <button type="button" class="focus-control focus-control--ghost" id="focus-reset" aria-label="重置计时器" title="重置">
+                <span data-icon="rotate-ccw" data-icon-size="18"></span>
+              </button>
+            </div>
+            <div class="focus-durations" id="focus-durations" aria-label="选择专注时长">
+              <button type="button" data-duration="25" class="is-active">25 分钟</button>
+              <button type="button" data-duration="45">45 分钟</button>
+              <button type="button" data-duration="60">60 分钟</button>
+              <button type="button" data-duration="90">90 分钟</button>
+            </div>
+          </section>
+
+          <aside class="focus-side">
+            <section class="card focus-side-card">
+              <div class="focus-side-card__head">
+                <h3>今日专注</h3>
+                <span id="focus-today-date">星期五</span>
+              </div>
+              <div class="focus-today">
+                <div class="focus-today__dial" id="focus-today-dial"></div>
+                <div class="focus-today__stats">
+                  <div class="focus-today__row"><span>专注时长</span><strong id="focus-today-minutes">0 分钟</strong></div>
+                  <div class="focus-today__row"><span>完成轮次</span><strong id="focus-today-sessions">0 轮</strong></div>
+                  <div class="focus-today__row"><span>今日目标</span><strong id="focus-today-goal">90 分钟</strong></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="card focus-side-card">
+              <div class="focus-side-card__head">
+                <h3>专注记录</h3>
+                <span>今天</span>
+              </div>
+              <div class="session-list" id="focus-session-list"></div>
+            </section>
+
+            <section class="card focus-method">
+              <div class="focus-method__head"><span data-icon="lightbulb" data-icon-size="14"></span>专注不是硬撑</div>
+              <p id="focus-method-text">开始前写下这一轮只做什么。25 分钟结束后，站起来走动 5 分钟，再决定下一轮。</p>
+            </section>
+          </aside>
+        </div>
+
+        <button type="button" class="zen-exit" id="zen-exit">
+          <span data-icon="minimize" data-icon-size="14"></span>退出沉浸
+        </button>
+
+        <footer class="site-footer">
+          <span>StudyNet 学习舱 · 一次只做一件事</span>
+          <span><span data-icon="lock" data-icon-size="12"></span> 专注记录只保存在本机</span>
+        </footer>
+      </main>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="底部导航"></nav>
+  </div>
+
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+  <div id="onboarding-root"></div>
+
+  <script src="assets/vendor/katex/katex.min.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/shell.js"></script>
+  <script src="assets/js/focus.js"></script>
+</body>
+</html>

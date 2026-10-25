@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <title>智能错题本 · StudyNet 学习舱</title>
+  <meta name="description" content="用 AI 归纳错因、提炼知识点并按遗忘曲线安排复习，建立真正有用的电子错题本。">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body data-page="mistakes">
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="侧边导航"></aside>
+    <div class="app-main">
+      <header id="topbar" class="topbar"></header>
+      <main class="page-content" id="main">
+        <section class="page-head">
+          <div class="page-head__main">
+            <p class="page-eyebrow"><i></i>ERRORS → INSIGHTS</p>
+            <h1>智能错题本</h1>
+            <p class="page-head__sub">错题不是收藏品。让 AI 帮你找到错因，再用复习节奏真正补上漏洞。</p>
+          </div>
+          <div class="page-head__actions">
+            <button type="button" class="btn btn--ghost" id="mistake-report-btn">
+              <span data-icon="brain"></span><span class="btn__optional-text">AI 归因报告</span>
+            </button>
+            <button type="button" class="btn btn--primary" id="mistake-add-btn">
+              <span data-icon="plus"></span><span>记录错题</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="mistake-stats" id="mistake-stats" aria-label="错题统计"></section>
+
+        <section class="due-banner" id="due-banner" hidden>
+          <span class="due-banner__icon" data-icon="clock" data-icon-size="19"></span>
+          <div class="due-banner__body">
+            <strong id="due-banner-title">今天有错题需要复习</strong>
+            <p id="due-banner-text">按遗忘曲线复习，比反复看错题更有效。</p>
+          </div>
+          <button type="button" class="btn btn--dark" id="due-review-btn">
+            <span data-icon="play" data-icon-size="15"></span>开始复习
+          </button>
+        </section>
+
+        <section class="mistake-toolbar" aria-label="筛选错题">
+          <label class="search-box">
+            <span data-icon="search" data-icon-size="16"></span>
+            <input type="search" id="mistake-search" placeholder="搜索题目、知识点…" autocomplete="off">
+          </label>
+          <div class="filter-scroll" id="subject-filters"></div>
+          <span class="toolbar-divider"></span>
+          <select class="toolbar-select" id="status-filter" aria-label="按状态筛选">
+            <option value="all">全部状态</option>
+            <option value="due">待复习</option>
+            <option value="starred">重点错题</option>
+            <option value="mastered">已掌握</option>
+          </select>
+          <select class="toolbar-select" id="sort-filter" aria-label="排序方式">
+            <option value="recent">最近添加</option>
+            <option value="due">最久未复习</option>
+            <option value="mastery">掌握度最低</option>
+            <option value="difficulty">难度最高</option>
+          </select>
+          <div class="view-toggle" aria-label="切换视图">
+            <button type="button" id="view-grid" class="is-active" title="卡片视图" aria-label="卡片视图">
+              <span data-icon="grid" data-icon-size="14"></span>
+            </button>
+            <button type="button" id="view-list" title="列表视图" aria-label="列表视图">
+              <span data-icon="list" data-icon-size="14"></span>
+            </button>
+          </div>
+        </section>
+
+        <div id="mistake-grid" class="mistake-grid"></div>
+
+        <footer class="site-footer">
+          <span>StudyNet 学习舱 · 每一个错误都值得被认真对待</span>
+          <span><span data-icon="lock" data-icon-size="12"></span> 数据只保存在本机</span>
+        </footer>
+      </main>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="底部导航"></nav>
+  </div>
+
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+  <div id="onboarding-root"></div>
+
+  <script src="assets/vendor/katex/katex.min.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/shell.js"></script>
+  <script src="assets/js/mistakes.js"></script>
+</body>
+</html>

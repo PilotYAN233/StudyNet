@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <title>AI 答疑 · StudyNet 学习舱</title>
+  <meta name="description" content="随时向 AI 学习教练提问，获得循序渐进的初中全科讲解、思路提示和练习建议。">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body data-page="chat">
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="侧边导航"></aside>
+    <div class="app-main">
+      <header id="topbar" class="topbar"></header>
+      <main class="page-content page-content--chat" id="main">
+        <section class="chat-page-head">
+          <div>
+            <p class="page-eyebrow"><i></i>AI STUDY COACH</p>
+            <h1>AI 答疑</h1>
+            <p class="page-head__sub">不只给你答案，更陪你把思路走通。</p>
+          </div>
+          <div class="chat-head-actions">
+            <button type="button" class="btn btn--ghost" id="chat-history-open">
+              <span data-icon="history"></span>历史对话
+            </button>
+            <button type="button" class="btn btn--primary" id="chat-new-top">
+              <span data-icon="plus"></span>新对话
+            </button>
+          </div>
+        </section>
+
+        <div class="chat-layout">
+          <aside class="chat-history" id="chat-history" aria-label="对话历史">
+            <div class="chat-history__head">
+              <div>
+                <h2>对话记录</h2>
+                <span id="chat-history-count">0 个对话</span>
+              </div>
+              <div class="chat-history__head-actions">
+                <button type="button" class="icon-btn" id="chat-new-side" title="新建对话" aria-label="新建对话">
+                  <span data-icon="plus"></span>
+                </button>
+                <button type="button" class="icon-btn chat-history-close" id="chat-history-close" title="关闭历史" aria-label="关闭对话历史">
+                  <span data-icon="x"></span>
+                </button>
+              </div>
+            </div>
+            <div class="chat-history__list" id="chat-history-list"></div>
+          </aside>
+          <div class="chat-history-backdrop" id="chat-history-backdrop"></div>
+
+          <section class="chat-main">
+            <div class="chat-main__bar">
+              <div class="chat-main__bar-left">
+                <button type="button" class="icon-btn chat-history-toggle" id="chat-history-toggle" aria-label="打开对话历史">
+                  <span data-icon="history"></span>
+                </button>
+                <span class="chat-main__bar-title" id="chat-current-title">新的对话 <span>初中全科</span></span>
+              </div>
+              <div class="chat-main__bar-right">
+                <span class="chat-model-status"><i></i><span id="chat-model-name">AI 已连接</span></span>
+              </div>
+            </div>
+
+            <div class="chat-scroll" id="chat-scroll">
+              <div class="chat-welcome" id="chat-welcome">
+                <div class="chat-orb"><span data-icon="sparkles" data-icon-size="29"></span></div>
+                <h1>今晚想先解决哪一道题？</h1>
+                <p>把卡住的地方直接发给我。我会先判断你缺的是概念、方法还是计算，再一步一步带你走。</p>
+                <div class="prompt-grid">
+                  <button type="button" class="prompt-card" data-prompt="请用初中生能听懂的方式，讲讲二次函数的顶点式。先给一个直观例子，再总结配方的一般步骤，最后给我一道只考这个知识点的小练习。" style="--prompt-color:#3157f5;--prompt-soft:#e9edff">
+                    <span class="prompt-card__icon" data-icon="book-open"></span>
+                    <span class="prompt-card__body"><strong>讲透一个知识点</strong><small>用例子拆开二次函数顶点式</small></span>
+                  </button>
+                  <button type="button" class="prompt-card" data-prompt="这道题我卡住了，请先不要直接给答案。先问我两个能帮助我判断方向的问题，再给我一个提示。如果我还是不会，再分步骤讲解。题目是：" style="--prompt-color:#ef735d;--prompt-soft:#ffebe6">
+                    <span class="prompt-card__icon" data-icon="brain"></span>
+                    <span class="prompt-card__body"><strong>陪我解一道题</strong><small>先提示，再一步步拆解</small></span>
+                  </button>
+                  <button type="button" class="prompt-card" data-prompt="帮我修改一段英语作文。请先指出语法和用词问题，再给一个改写版本，最后告诉我一个下次可以马上用上的句型。作文内容是：" style="--prompt-color:#179b7f;--prompt-soft:#e1f7f0">
+                    <span class="prompt-card__icon" data-icon="edit"></span>
+                    <span class="prompt-card__body"><strong>批改英语作文</strong><small>语法 · 用词 · 升级句型</small></span>
+                  </button>
+                  <button type="button" class="prompt-card" data-prompt="我要复习这周学过的内容。请用 5 个由易到难的问题检测我，一次只问一个问题，等我回答后再判断对错并追问。先从数学开始。" style="--prompt-color:#c78315;--prompt-soft:#fff4d8">
+                    <span class="prompt-card__icon" data-icon="target"></span>
+                    <span class="prompt-card__body"><strong>考前快速自测</strong><small>用问题找出真正的漏洞</small></span>
+                  </button>
+                </div>
+                <p class="chat-context-hint" id="chat-context-hint">
+                  <span data-icon="shield" data-icon-size="13"></span>对话保存在这台设备上，你可以随时删除
+                </p>
+              </div>
+              <div class="chat-messages" id="chat-messages"></div>
+              <div class="chat-scroll__bottom"></div>
+            </div>
+
+            <button type="button" class="chat-jump" id="chat-jump">
+              <span data-icon="arrow-down" data-icon-size="13"></span>回到最新
+            </button>
+
+            <div class="chat-composer">
+              <form class="composer" id="chat-form">
+                <textarea class="composer__textarea" id="chat-input" rows="1" maxlength="6000" placeholder="写下题目、作文或你卡住的地方…" aria-label="输入问题"></textarea>
+                <div class="composer__toolbar">
+                  <select class="composer__select" id="chat-subject" aria-label="选择回答学科">
+                    <option value="all">全科</option>
+                  </select>
+                  <span class="composer__hint"><kbd>Enter</kbd> 发送 · <kbd>Shift</kbd> + <kbd>Enter</kbd> 换行</span>
+                  <button type="submit" class="composer__send" id="chat-send" aria-label="发送消息" disabled>
+                    <span data-icon="send" data-icon-size="17"></span>
+                  </button>
+                </div>
+              </form>
+              <p class="composer__foot">AI 可能会犯错。遇到关键结论，记得回到课本和老师那里核对。</p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="底部导航"></nav>
+  </div>
+
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+  <div id="onboarding-root"></div>
+
+  <script src="assets/vendor/katex/katex.min.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/shell.js"></script>
+  <script src="assets/js/chat.js"></script>
+</body>
+</html>

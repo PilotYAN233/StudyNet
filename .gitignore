@@ -1,0 +1,11 @@
+node_modules/
+.wrangler/
+.dev.vars
+.DS_Store
+Thumbs.db
+*.log
+.tools/
+screenshots/
+_serve.py
+_make_og.py
+_make_assets.py

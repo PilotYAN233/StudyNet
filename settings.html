@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <title>设置与档案 · StudyNet 学习舱</title>
+  <meta name="description" content="管理自己的学习档案、AI API 配置和本地数据备份。">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body data-page="settings">
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="侧边导航"></aside>
+    <div class="app-main">
+      <header id="topbar" class="topbar"></header>
+      <main class="page-content" id="main">
+        <section class="page-head">
+          <div class="page-head__main">
+            <p class="page-eyebrow"><i></i>MY LEARNING SPACE</p>
+            <h1>设置与档案</h1>
+            <p class="page-head__sub">调好学习舱的参数。你的数据、密钥和节奏，都由你自己掌握。</p>
+          </div>
+          <div class="page-head__actions">
+            <button type="button" class="btn btn--ghost" id="settings-export">
+              <span data-icon="download"></span><span>导出备份</span>
+            </button>
+          </div>
+        </section>
+
+        <div class="settings-grid">
+          <div class="settings-main">
+            <section class="card settings-card settings-card--pad-lg">
+              <div class="profile-banner">
+                <div class="profile-banner__avatar" id="profile-avatar">同</div>
+                <div class="profile-banner__body">
+                  <h2 id="profile-display-name">同学</h2>
+                  <p id="profile-display-sub">让学习舱更了解你，AI 的建议会更贴近你的节奏。</p>
+                  <div class="profile-banner__tags">
+                    <span class="chip chip--primary" id="profile-display-grade">八年级</span>
+                    <span class="chip" id="profile-display-minutes">每日 90 分钟</span>
+                    <span class="chip chip--mint">本机档案</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="settings-card__head" style="margin-top:22px">
+                <div>
+                  <h2><span data-icon="graduation"></span>学习档案</h2>
+                  <p>这些信息会进入 AI 的学习背景，不会上传到 StudyNet 服务器。</p>
+                </div>
+              </div>
+
+              <form class="settings-form" id="profile-form" novalidate>
+                <div class="form-grid form-grid--two">
+                  <label class="field">
+                    <span class="field__label">怎么称呼你</span>
+                    <input class="input" id="settings-name" maxlength="12" placeholder="例如：小林" autocomplete="nickname">
+                  </label>
+                  <label class="field">
+                    <span class="field__label">年级</span>
+                    <select class="input" id="settings-grade">
+                      <option>七年级</option>
+                      <option>八年级</option>
+                      <option>九年级</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="form-grid form-grid--two">
+                  <label class="field">
+                    <span class="field__label">每日专注目标</span>
+                    <select class="input" id="settings-minutes">
+                      <option value="45">45 分钟</option>
+                      <option value="60">1 小时</option>
+                      <option value="90">1.5 小时</option>
+                      <option value="120">2 小时</option>
+                      <option value="150">2.5 小时</option>
+                      <option value="180">3 小时</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">近期目标</span>
+                    <input class="input" id="settings-goal" maxlength="60" placeholder="例如：数学稳定在 105 分以上">
+                  </label>
+                </div>
+                <div class="settings-save-row">
+                  <span id="profile-save-hint">档案只保存在本机</span>
+                  <button type="submit" class="btn btn--dark">保存档案</button>
+                </div>
+              </form>
+            </section>
+
+            <section class="card settings-card settings-card--pad-lg" id="api-card">
+              <div class="settings-card__head">
+                <div>
+                  <h2><span data-icon="key"></span>AI 模型连接</h2>
+                  <p>使用你自己的 API Key。StudyNet 不内置公共密钥，也不收取模型费用。</p>
+                </div>
+                <span class="chip" id="api-save-status">已保存</span>
+              </div>
+
+              <div class="api-status" id="api-status">
+                <span class="api-status__dot" data-icon="zap" data-icon-size="17"></span>
+                <div class="api-status__body">
+                  <strong id="api-status-title">检查中...</strong>
+                  <span id="api-status-desc">正在读取本地配置</span>
+                </div>
+                <span class="api-status__badge" id="api-status-badge">读取中</span>
+              </div>
+
+              <form class="settings-form" id="api-form" novalidate>
+                <div class="form-grid form-grid--two">
+                  <label class="field">
+                    <span class="field__label">服务商</span>
+                    <select class="input" id="api-provider">
+                      <option value="deepseek">DeepSeek</option>
+                      <option value="openai">OpenAI</option>
+                      <option value="custom">自定义 OpenAI 兼容接口</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">模型名称</span>
+                    <input class="input" id="api-model" list="model-presets" spellcheck="false" placeholder="deepseek-chat">
+                    <datalist id="model-presets"></datalist>
+                  </label>
+                </div>
+                <label class="field">
+                  <span class="field__label">API Key <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener noreferrer" class="field__hint-link" id="api-key-link">去 DeepSeek 获取</a></span>
+                  <div class="input-affix">
+                    <input class="input" id="api-key" type="password" placeholder="sk-..." autocomplete="off" spellcheck="false">
+                    <button type="button" class="input-affix__btn" id="api-key-toggle" aria-label="显示或隐藏 API Key">
+                      <span data-icon="eye" data-icon-size="17"></span>
+                    </button>
+                  </div>
+                  <span class="field__help">以 <code>sk-</code> 开头的密钥通常只会完整显示一次，请妥善保存。</span>
+                </label>
+                <label class="field">
+                  <span class="field__label">接口地址（Base URL）</span>
+                  <input class="input" id="api-base" type="url" spellcheck="false" placeholder="https://api.deepseek.com/v1">
+                  <span class="field__help">填到 <code>/v1</code> 为止；系统会自动拼接 <code>/chat/completions</code>。</span>
+                </label>
+
+                <details class="setup-advanced" style="margin-top:2px">
+                  <summary>高级选项 <span>请求通道与生成参数</span></summary>
+                  <div class="form-grid form-grid--two">
+                    <label class="field">
+                      <span class="field__label">请求通道</span>
+                      <select class="input" id="api-route">
+                        <option value="auto">自动（推荐）</option>
+                        <option value="direct">浏览器直连</option>
+                        <option value="proxy">Cloudflare 同源中转</option>
+                      </select>
+                      <span class="field__help">官方模型在 Cloudflare Pages 上会自动走同源中转，解决浏览器跨域限制。</span>
+                    </label>
+                    <label class="field">
+                      <span class="field__label">温度 <span id="temperature-value">0.5</span></span>
+                      <input class="range" id="api-temperature" type="range" min="0" max="1.2" step="0.1" value="0.5">
+                      <span class="field__help">越低越稳定，越高越发散。学习讲解建议 0.3-0.6。</span>
+                    </label>
+                  </div>
+                  <div class="form-grid form-grid--two" style="margin-top:12px">
+                    <label class="field">
+                      <span class="field__label">最大输出 tokens</span>
+                      <input class="input" id="api-max-tokens" type="number" min="256" max="8000" step="100" value="1800">
+                    </label>
+                    <label class="check-row" style="align-self:end;padding-bottom:11px">
+                      <input type="checkbox" id="api-streaming" checked><span>启用流式输出（逐字显示）</span>
+                    </label>
+                  </div>
+                </details>
+
+                <div class="setup-test-row">
+                  <button type="button" class="btn btn--soft btn--sm" id="api-test">
+                    <span data-icon="zap" data-icon-size="15"></span>测试连接
+                  </button>
+                  <span class="setup-test-status" id="api-test-status">保存前可以先用一条极短消息测试</span>
+                </div>
+
+                <div class="settings-note">
+                  <span data-icon="shield" data-icon-size="14"></span>
+                  <span>密钥只存在当前浏览器的 localStorage 中，请求时通过 HTTPS 直接发往你配置的服务商；Cloudflare 中转函数不会持久化密钥。</span>
+                </div>
+
+                <div class="settings-save-row">
+                  <span id="api-save-hint">上次保存：—</span>
+                  <button type="submit" class="btn btn--primary">保存 AI 配置</button>
+                </div>
+              </form>
+            </section>
+
+            <section class="card settings-card danger-zone">
+              <div class="settings-card__head">
+                <div>
+                  <h2><span data-icon="alert"></span>危险操作</h2>
+                  <p>这些操作会改变或删除本机数据，执行前请先导出备份。</p>
+                </div>
+              </div>
+              <div class="danger-action">
+                <div><strong>清空 AI 对话记录</strong><span>只删除对话，不影响计划、错题和 API 配置。</span></div>
+                <button type="button" class="btn btn--ghost btn--sm" id="clear-chats">清空对话</button>
+              </div>
+              <div class="danger-action">
+                <div><strong>清空全部学习数据</strong><span>删除档案、计划、错题、专注记录和对话，保留 API 配置。</span></div>
+                <button type="button" class="btn btn--danger-ghost btn--sm" id="clear-all">清空学习数据</button>
+              </div>
+            </section>
+          </div>
+
+          <aside class="settings-side">
+            <section class="card">
+              <h3>本地数据</h3>
+              <div class="data-action">
+                <span class="data-action__icon" data-icon="download" data-icon-size="16"></span>
+                <div class="data-action__body"><strong>导出 JSON 备份</strong><span>不包含 API Key，可跨设备恢复</span></div>
+                <button type="button" class="btn btn--ghost btn--sm" id="data-export">导出</button>
+              </div>
+              <div class="data-action">
+                <span class="data-action__icon" data-icon="file" data-icon-size="16"></span>
+                <div class="data-action__body"><strong>导出错题 CSV</strong><span>可用 Excel 打开和打印</span></div>
+                <button type="button" class="btn btn--ghost btn--sm" id="data-csv">导出</button>
+              </div>
+              <div class="data-action">
+                <span class="data-action__icon" data-icon="upload" data-icon-size="16"></span>
+                <div class="data-action__body"><strong>导入备份</strong><span>会覆盖当前学习数据</span></div>
+                <button type="button" class="btn btn--ghost btn--sm" id="data-import">选择文件</button>
+                <input type="file" id="import-file" accept="application/json,.json" hidden>
+              </div>
+              <div class="storage-meter">
+                <div class="storage-meter__top"><span>本地存储占用</span><strong id="storage-size">0 KB</strong></div>
+                <div class="storage-meter__bar"><span id="storage-bar" style="width:0%"></span></div>
+                <p id="storage-hint">浏览器通常提供约 5MB 本地空间。</p>
+              </div>
+            </section>
+
+            <section class="card">
+              <h3>数据与隐私</h3>
+              <div class="side-info-list">
+                <div class="side-info"><span data-icon="lock" data-icon-size="14"></span><span>计划、错题和对话保存在这台设备的浏览器中，不会自动跨设备同步。</span></div>
+                <div class="side-info"><span data-icon="shield" data-icon-size="14"></span><span>API Key 只保存在本机。使用官方模型时，Cloudflare 中转仅转发请求，不写入数据库。</span></div>
+                <div class="side-info"><span data-icon="info" data-icon-size="14"></span><span>清理浏览器数据或更换设备前，请先导出 JSON 备份。</span></div>
+              </div>
+            </section>
+
+            <section class="card about-card">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <div class="brand">
+                  <span class="brand__mark"><span data-icon="sparkles" data-icon-size="20"></span></span>
+                  <span class="brand__text"><strong>StudyNet</strong><small>学习舱</small></span>
+                </div>
+                <span class="chip chip--lime" style="height:22px;font-size:8px">v1.0.1</span>
+              </div>
+              <div class="about-card__version"><span>LOCAL-FIRST</span><span>CLOUDFLARE PAGES READY</span></div>
+              <p>一个为初中三年设计的 AI 学习工作台。没有信息流，没有排行榜，只留下每天真实发生的学习。</p>
+              <div class="about-card__links">
+                <a href="index.html">学习首页 <span data-icon="arrow-up-right" data-icon-size="11"></span></a>
+                <a href="chat.html">AI 答疑 <span data-icon="arrow-up-right" data-icon-size="11"></span></a>
+                <a href="focus.html">专注空间 <span data-icon="arrow-up-right" data-icon-size="11"></span></a>
+              </div>
+            </section>
+          </aside>
+        </div>
+
+        <footer class="site-footer">
+          <span>StudyNet 学习舱 · 把努力变得可见</span>
+          <span><span data-icon="lock" data-icon-size="12"></span> 数据只保存在本机</span>
+        </footer>
+      </main>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="底部导航"></nav>
+  </div>
+
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+  <div id="onboarding-root"></div>
+
+  <script src="assets/vendor/katex/katex.min.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/ai.js"></script>
+  <script src="assets/js/shell.js"></script>
+  <script src="assets/js/settings.js"></script>
+</body>
+</html>

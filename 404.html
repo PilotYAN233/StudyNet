@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <title>页面走丢了 · StudyNet 学习舱</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <style>
+    body { display: grid; place-items: center; min-height: 100dvh; padding: 24px; }
+    .notfound { width: min(520px, 100%); padding: 38px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; box-shadow: var(--shadow-md); }
+    .notfound .brand { justify-content: center; margin-bottom: 28px; }
+    .notfound__code { font-family: var(--font); font-size: 84px; font-weight: 700; letter-spacing: -0.08em; line-height: 1; color: var(--primary); }
+    .notfound h1 { margin-top: 12px; font-size: 25px; }
+    .notfound p { margin: 8px auto 24px; max-width: 330px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .notfound__actions { display: flex; justify-content: center; gap: 9px; flex-wrap: wrap; }
+    .notfound__art { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 16px; border-radius: 18px; background: var(--primary-soft); color: var(--primary); transform: rotate(-4deg); }
+  </style>
+</head>
+<body>
+  <main class="notfound">
+    <a class="brand" href="index.html"><span class="brand__mark">✦</span><span class="brand__text"><strong>StudyNet</strong><small>学习舱</small></span></a>
+    <div class="notfound__art">⌁</div>
+    <div class="notfound__code">404</div>
+    <h1>这条学习路径不存在</h1>
+    <p>页面可能被移动了，或者链接写错了。回到学习台，继续今天的节奏。</p>
+    <div class="notfound__actions">
+      <a class="btn btn--primary" href="index.html">回到学习首页</a>
+      <a class="btn btn--ghost" href="plan.html">查看今日计划</a>
+    </div>
+  </main>
+</body>
+</html>
